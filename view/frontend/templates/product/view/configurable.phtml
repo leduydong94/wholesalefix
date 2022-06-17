@@ -1,0 +1,89 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category  BSS
+ * @package   Bss_ConfigurableProductWholesale
+ * @author    Extension Team
+ * @copyright Copyright (c) 2017-2018 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license   http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+
+// @codingStandardsIgnoreFile
+/** @var $block \Bss\ConfigurableProductWholesale\Block\Product\Renderer\ConfigurableProductWholesale */
+/** @var \Magento\Swatches\ViewModel\Product\Renderer\Configurable $configurableViewModel */
+$configurableViewModel = $block->getConfigurableViewModel()
+?>
+<?php
+$_helper = $block->getHelper();
+$_magentoHelper = $block->getMagentoHelper();
+$tableData = $block->getJsonConfigTable();
+$_product = $block->getProduct();
+$countCpAttributes = $block->getCountAttributes();
+$stockItem = $block->getStockItem()->getData();
+?>
+<div class="swatch-opt" data-role="swatch-options"></div>
+
+<div class="bss-ptd-table" data-bind="scope:'knockouts'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</div>
+
+<script type="text/x-magento-init">
+    {
+        ".bss-ptd-table": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "knockouts": {
+                        "component": "Bss_ConfigurableProductWholesale/js/cpwd",
+                        "productData": <?= /* @escapeNotVerified */ $block->getDataJson() ?>,
+                        "attributeData": <?= /* @escapeNotVerified */ $block->getAttributeData() ?>,
+                        "swatchAtrributeData": <?= /* @escapeNotVerified */ $block->getSwatchAttributeData() ?>,
+                        "productOptionsIndex": <?= $block->getProductOptionsIndex() ?>,
+                        "jsonSwatchConfig": <?= /* @escapeNotVerified */ $block->getJsonSwatchConfig() ?>,
+                        "jsonSystemConfig": <?= /* @escapeNotVerified */ $_helper->getJsonSystemConfig($_product) ?>,
+                        "isDecimalQty": <?php /* @escapeNotVerified */ echo $stockItem['is_qty_decimal'] ?>,
+                        <?php if ($block->getStockItem()->getQtyIncrements()) : ?>
+                        "incrementQty": <?php /* @escapeNotVerified */ echo $block->getStockItem()->getQtyIncrements() ?>,
+                         <?php endif;?>
+                         "fomatPrice": <?= /* @escapeNotVerified */ $_helper->getFomatPrice() ?>,
+                         "isAjaxLoad": <?php echo $_helper->isAjax($_product) ? 1 : 0 ?>,
+                         "noSwatch": "0",
+                         "jsonConfig": <?= /* @escapeNotVerified */ $block->getJsonConfig() ?>
+                    }
+                }
+            }
+        }
+    }
+</script>
+
+<script type="text/x-magento-init">
+    {
+        "[data-role=swatch-options]": {
+            "wholesale-renderer": {
+                <?php if ($jsonConfigTable = $block->getJsonConfigTableOrdering()) :?>
+                    "jsonConfig": <?php /* @noEscape */ echo $jsonConfigTable; ?>,
+                <?php endif;?>
+                <?php if ($block->checkVersion()) :?>
+                    "jsonSwatchImageSizeConfig": <?php /* @noEscape */ echo $block->getJsonSwatchSizeConfig() ?>,
+                <?php endif;?>
+                "jsonSwatchConfig": <?php /* @noEscape */ echo $block->getJsonSwatchConfig(); ?>,
+                "mediaCallback": "<?php /* @noEscape */ echo $block->getMediaCallback() ?>",
+                <?php if ($_helper->isEnableSdcp($_product)): ?>
+                "isEnabledSdcp": <?= $_helper->isEnableSdcp($_product) ?>,
+                <?php endif; ?>
+                "gallerySwitchStrategy": "<?php /* @noEscape */ echo $block->getVar(
+        'gallery_switch_strategy',
+        'Magento_ConfigurableProduct'
+    ) ?: 'replace'; ?>",
+                "showTooltip": <?= $configurableViewModel->getShowSwatchTooltip() ?>
+            }
+        }
+    }
+</script>

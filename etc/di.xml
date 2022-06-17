@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Bss\ConfigurableProductWholesale\Controller\Index\RenderTable" type="Bss\ConfigurableProductWholesaleFix\Override\Controller\Index\RenderTable" />
+    <preference for="Bss\ConfigurableProductWholesale\Block\Product\Renderer\ConfigurableProductWholesale" type="Bss\ConfigurableProductWholesaleFix\Block\Product\Renderer\ConfigurableProductWholesale" />
+    <preference for="Bss\ConfigurableProductWholesale\Helper\Data" type="Bss\ConfigurableProductWholesaleFix\Helper\Data" />
+</config>

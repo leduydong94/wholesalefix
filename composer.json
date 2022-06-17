@@ -1,0 +1,21 @@
+{
+    "name": "bsscommerce/module-configurable-product-wholesale-fix",
+    "description": "NA",
+    "type": "magento2-module",
+    "version": "1.0.0",
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "suggest": {
+        "bsscommerce/configurable-product-wholesale-display": "1.*.*"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Bss\\ConfigurableProductWholesaleFix\\": ""
+        }
+    }
+}
